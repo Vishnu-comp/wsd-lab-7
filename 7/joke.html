@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <header>
+        <a href="#" class="logo">WEB STACK LAB 6</a>
+        <ul class="navbar" >
+            <li><a href="#home"><b><h3>VISHNU NAIR</h3></b></a></li>       
+        </ul>
+    </header>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Random Joke</title>
+</head>
+<body>
+    <center><h1>Random Joke</h1></center>
+    <p align="center" id="jokeText"></p>
+    <center><button id="fetchButton">Get Joke</button></center>
+
+    <script>
+        const jokeTextElement = document.getElementById('jokeText');
+        const fetchButton = document.getElementById('fetchButton');
+
+        // Function to fetch a random joke and update the text
+        function fetchRandomJoke() {
+            fetch('https://v2.jokeapi.dev/joke/Any')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.type === 'single') {
+                        jokeTextElement.textContent = data.joke;
+                    } else if (data.type === 'twopart') {
+                        jokeTextElement.textContent = `${data.setup} ${data.delivery}`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching joke:', error);
+                });
+        }
+
+        // Attach a click event listener to the button
+        fetchButton.addEventListener('click', fetchRandomJoke);
+
+        // Fetch and display a random joke when the page loads
+        fetchRandomJoke();
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details</title>
+</head>
+<body>
+    <h1>Book Details</h1>
+    <div id="bookDetails">
+        <!-- Book details will be displayed here -->
+    </div>
+    <button id="fetchButton">Fetch Book Details</button>
+
+    <script>
+        const apiKey = 'AIzaSyCzg4DaHeQsDhLtNonWlIGJsuexmT0LD-E'; // Replace with your API key
+
+        const bookDetailsElement = document.getElementById('bookDetails');
+        const fetchButton = document.getElementById('fetchButton');
+
+        // Function to fetch book details and display them
+        function fetchBookDetails() {
+            // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint
+            fetch('https://books.googleapis.com', {
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Process the book details data and display it on the webpage
+                    const bookTitle = data.title;
+                    const bookAuthor = data.author;
+                    const bookDescription = data.description;
+
+                    // Create HTML elements to display book details
+                    const titleElement = document.createElement('h2');
+                    titleElement.textContent = bookTitle;
+
+                    const authorElement = document.createElement('p');
+                    authorElement.textContent = `Author: ${bookAuthor}`;
+
+                    const descriptionElement = document.createElement('p');
+                    descriptionElement.textContent = bookDescription;
+
+                    // Clear previous data and append new elements
+                    bookDetailsElement.innerHTML = '';
+                    bookDetailsElement.appendChild(titleElement);
+                    bookDetailsElement.appendChild(authorElement);
+                    bookDetailsElement.appendChild(descriptionElement);
+                })
+                .catch(error => {
+                    console.error('Error fetching book details:', error);
+                });
+        }
+
+        // Attach a click event listener to the button
+        fetchButton.addEventListener('click', fetchBookDetails);
+
+        // Fetch and display book details when the page loads (optional)
+        // fetchBookDetails();
+    </script>
+</body>
+</html>
